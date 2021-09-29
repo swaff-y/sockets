@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "name": "client",
+  "main": "script.js",
+  "scripts": {
+    "start": "snowpack dev"
+  }
+}

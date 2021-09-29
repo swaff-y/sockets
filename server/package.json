@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "name": "server",
+  "main": "server.js",
+  "scripts": {
+    "devStart":"nodemon server.js"
+  }
+}
