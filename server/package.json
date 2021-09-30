@@ -1,10 +1,11 @@
 {
   "dependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.13",
+    "socket.io": "^4.2.0"
   },
   "name": "server",
   "main": "server.js",
   "scripts": {
-    "devStart":"nodemon server.js"
+    "devStart": "nodemon server.js"
   }
 }
