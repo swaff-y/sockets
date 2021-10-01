@@ -1,10 +1,40 @@
 // Need to install socket library 11:23
 // npm i socket.io
+// npm i @socket.io/admin-ui -> dashboard to view socket.io stuff
 
 //also installed npm i nodemon --save-dev for a dev dependancy (this is the server to look for changes in dev)
+
+// The admin/ui for socket.io
+const { instrument } = require("@socket.io/admin-ui");
+
 const io = require("socket.io")(3001,{
-  cors: ["http://localhost:8080"]
+  cors: {
+    origin: ["http://localhost:8080", "https://admin.socket.io"],
+  },
 });
+
+//a user namespace
+// everything we do on io we can do on this user io
+// namespaces are useful for connecting middleware, like authentication middleware
+const userIo = io.of('/user');
+userIo.on('connection', socket => {
+  console.log("connected to user namespace with username " + socket.username);
+});
+
+//this is how we setup different middleware
+userIo.use((socket, next) => {
+  //we can get the auth token passed up from the client
+  if(socket.handshake.auth.token){
+    socket.username = getUsernameFromToken(socket.handshake.auth.token);
+    next();
+  } else {
+    next(new Error("Please send token"))
+  }
+})
+
+function getUsernameFromToken(token){
+  return token
+}
 
 // runs everytime a client makes a connection to
 // our server and give a socket instance for each one of them.
@@ -48,5 +78,8 @@ io.on('connection', socket => { //function that runs everytime client connects
     //to have the callback, your message was successfull is eally useful.
     cb("Joined: " + room);
   });
-
 });
+
+//goto https://admin.socket.io
+// should set a username and password
+instrument(io, { auth: false })

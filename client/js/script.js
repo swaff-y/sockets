@@ -13,6 +13,11 @@ const roomInput = document.getElementById('room-input');
 const form = document.getElementById('form');
 
 const socket = io('http://localhost:3001') //pass the Url of our server
+
+//the user namespace socket
+// we can pass in auth information
+const userSocket = io('http://localhost:3001/user',{auth:{token:'Test'}})
+
 //check connection, this will listen to any event. Can create our own custom events
 // or we can use connect. This is an event that will run evertime we connect to our SERVER
 socket.on('connect', () => {
