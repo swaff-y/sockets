@@ -44,8 +44,8 @@ io.on('connection', socket => { //function that runs everytime client connects
     //if you want to do something and tell the use when it is done.
     //You can use this call back.
     // Usecase: have a messaging system where you would tell the user once the message was sent.
-    //The call back can be used to verify once the callback has benn sent.
-    //to have the callback, your message was successfull is rI eally useful.
+    //The call back can be used to verify once the callback has been sent.
+    //to have the callback, your message was successfull is eally useful.
     cb("Joined: " + room);
   });
 
