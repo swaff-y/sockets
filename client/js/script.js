@@ -40,13 +40,24 @@ form.addEventListener("submit", e => {
   if(message === '') return;
 
   displayMessage(message);
-  socket.emit('send-message', message); //pass up the message we are sending
+  //socket.emit('send-message', message); //pass up the message we are sending
+
+  //To send a message to another user, send the room with the message
+  // the room is there ID
+  socket.emit('send-message', message, room);
 
   messageInput.value=""
 })
 
 joinRoomButton.addEventListener("click", () => {
+  //send to multiple people but not to everyone. We can send to custom rooms
   const room = roomInput.value;
+
+  // you can pass it a callback function
+  //it get called from the server back down to the client
+  socket.emit("join-room", room, message => {
+    displayMessage(message);
+  })
 })
 
 function displayMessage(message){
