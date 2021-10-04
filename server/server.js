@@ -77,6 +77,12 @@ io.on('connection', socket => { //function that runs everytime client connects
     //The call back can be used to verify once the callback has been sent.
     //to have the callback, your message was successfull is eally useful.
     cb("Joined: " + room);
+
+
+  });
+  //pinging the server
+  socket.on("ping", n => {
+    console.log(n);
   });
 });
 

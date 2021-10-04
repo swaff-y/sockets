@@ -16,7 +16,15 @@ const socket = io('http://localhost:3001') //pass the Url of our server
 
 //the user namespace socket
 // we can pass in auth information
-const userSocket = io('http://localhost:3001/user',{auth:{token:'Test'}})
+//const userSocket = io('http://localhost:3001/user',{auth:{token:'Test'}})
+//fake error
+const userSocket = io('http://localhost:3001/user')
+
+//To check for errors
+userSocket.on("connect_error", error => {
+  displayMessage(error)
+});
+
 
 //check connection, this will listen to any event. Can create our own custom events
 // or we can use connect. This is an event that will run evertime we connect to our SERVER
@@ -72,3 +80,19 @@ function displayMessage(message){
   div.style.borderBottom = "1px solid #FFFFFF"
   document.getElementById("message-container").append(div);
 }
+
+let count = 0
+setInterval(()=>{
+  //store up all messages when disconnect and send once reconnected
+//  socket.emit('ping',++count);
+
+  //will not store up messages on disconnect.
+  socket.volatile.emit('ping', ++count);
+}, 1000)
+
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input')) return
+
+  if(e.key === 'c') socket.connect();
+  if(e.key === 'd') socket.disconnect();
+})
